@@ -14,7 +14,10 @@ public class WanderingAI : MonoBehaviour
 	private GameObject[] resources;
 	private float timer;
 	private bool walkingHome;
+	private Transform holdingArea;
+	private GameObject holdingResource;
 	public Vector3 home;
+
 
 	public void SetHome(Vector3 homePosition) {
 		home = homePosition;
@@ -26,6 +29,7 @@ public class WanderingAI : MonoBehaviour
 		agent = GetComponent<NavMeshAgent>();
 		timer = wanderTimer;
 		walkingHome = false;
+		holdingArea = gameObject.transform.Find("HoldingArea");
 		resources = GameObject.FindGameObjectsWithTag("Resource");
 	}
 
@@ -47,7 +51,25 @@ public class WanderingAI : MonoBehaviour
 		}
 
 		if (walkingHome)
-			walkingHome = Vector3.Distance(transform.position, home) > 1;
+		{
+			WalkHome();
+		}
+
+
+		if (holdingResource)
+			HoldResource(holdingResource);
+
+	}
+
+	private void WalkHome()
+	{
+		float distanceToHome = Vector3.Distance(transform.position, home);
+		if (distanceToHome < 1)
+		{
+			walkingHome = false;
+			Destroy(holdingResource);
+			holdingResource = null;
+		}
 
 	}
 
@@ -56,10 +78,16 @@ public class WanderingAI : MonoBehaviour
 		float distance = Vector3.Distance(transform.position, resource.transform.position);
 		agent.SetDestination(resource.transform.position);
 		if (distance < 1) {
-			Destroy(resource);
+			HoldResource(resource);
 			walkingHome = true;
 			agent.SetDestination(home);
 		}
+	}
+
+	private void HoldResource(GameObject resource)
+	{
+		holdingResource = resource;
+		resource.transform.position = holdingArea.position;
 	}
 
 	private bool IsCloseToResource()
