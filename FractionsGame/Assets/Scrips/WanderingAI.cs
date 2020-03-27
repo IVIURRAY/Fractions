@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.AI;
 
 public class WanderingAI : MonoBehaviour
@@ -11,6 +9,7 @@ public class WanderingAI : MonoBehaviour
 
 	private Transform target;
 	private NavMeshAgent agent;
+	private GameObject[] resources;
 	private float timer;
 
 	// Use this for initialization
@@ -18,6 +17,7 @@ public class WanderingAI : MonoBehaviour
 	{
 		agent = GetComponent<NavMeshAgent>();
 		timer = wanderTimer;
+		resources = GameObject.FindGameObjectsWithTag("Resource");
 	}
 
 	// Update is called once per frame
@@ -27,15 +27,58 @@ public class WanderingAI : MonoBehaviour
 
 		if (timer >= wanderTimer)
 		{
-			Vector3 newPos = RandomNavSphere(transform.position, wanderRadius, -1);
-			agent.SetDestination(newPos);
-			timer = 0;
+			if (IsCloseToResource())
+			{
+				MoveToResource(FindClosestResource());
+			}
+			else
+			{
+				MoveToRandomLocation();
+			}
+			
 		}
+	}
+
+	private void MoveToResource(GameObject resource)
+	{
+		print("Planning on moving toward resource");
+	}
+
+	private bool IsCloseToResource()
+	{
+		if (Vector3.Distance(FindClosestResource().transform.position, transform.position) < 4)
+			return true;
+
+		return false;
+	}
+
+	private GameObject FindClosestResource() {
+		float distance = Mathf.Infinity;
+		GameObject closest = null;
+
+		foreach (GameObject resource in resources)
+		{
+			float distanceToResource = Vector3.Distance(resource.gameObject.transform.position, transform.position);
+			if (distanceToResource < distance)
+			{
+				distance = distanceToResource;
+				closest = resource;
+			}
+		}
+
+		return closest;
+	}
+
+	private void MoveToRandomLocation()
+	{
+		Vector3 newPos = RandomNavSphere(transform.position, wanderRadius, -1);
+		agent.SetDestination(newPos);
+		timer = 0;
 	}
 
 	public static Vector3 RandomNavSphere(Vector3 origin, float dist, int layermask)
 	{
-		Vector3 randDirection = Random.insideUnitSphere * dist;
+		Vector3 randDirection = UnityEngine.Random.insideUnitSphere * dist;
 
 		randDirection += origin;
 
