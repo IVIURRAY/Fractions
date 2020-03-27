@@ -18,6 +18,14 @@ public class Spawner : MonoBehaviour
 			Vector3 pos = transform.position + new Vector3(x, 0, z);
 			float angleDegrees = -angle * Mathf.Rad2Deg;
 			Quaternion rot = Quaternion.Euler(0, angleDegrees, 0);
+
+			// Set the AI home
+			WanderingAI wanderingAi = prefab.GetComponent<WanderingAI>();
+			if (wanderingAi)
+			{
+				wanderingAi.SetHome(transform.position);
+			}
+
 			Instantiate(prefab, pos, rot);
 		}
 	}
