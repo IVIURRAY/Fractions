@@ -397,7 +397,7 @@ GameObject:
   - component: {fileID: 728437696}
   m_Layer: 0
   m_Name: StoneSpawn
-  m_TagString: Untagged
+  m_TagString: StoneResource
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -526,7 +526,7 @@ GameObject:
   - component: {fileID: 1032155979}
   m_Layer: 0
   m_Name: FoodSpawn
-  m_TagString: Untagged
+  m_TagString: FoodResource
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

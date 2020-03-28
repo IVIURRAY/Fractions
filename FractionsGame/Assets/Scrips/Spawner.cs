@@ -23,10 +23,7 @@ public class Spawner : MonoBehaviour
 			WanderingAI wanderingAi = prefab.GetComponent<WanderingAI>();
 			VillagerCamp villagerCamp = GetComponent<VillagerCamp>();
 			if (wanderingAi)
-			{
 				wanderingAi.SetCamp(villagerCamp);
-				// wanderingAi.SetHome(transform.position);
-			}
 
 			Instantiate(prefab, pos, rot);
 		}

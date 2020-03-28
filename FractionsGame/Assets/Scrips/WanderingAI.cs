@@ -80,11 +80,36 @@ public class WanderingAI : MonoBehaviour
 	{
 		float distance = Vector3.Distance(transform.position, resource.transform.position);
 		agent.SetDestination(resource.transform.position);
-		if (distance < 1) {
-			HoldResource(resource);
-			walkingHome = true;
+		if (distance < 1)
+		{
+			TakeResourceToCamp(resource);
+		}
+	}
+
+	private void TakeResourceToCamp(GameObject resource)
+	{
+		Resource res = resource.GetComponent<Resource>();
+		res.IsAqurired = true;
+
+		HoldResource(resource);
+		walkingHome = true;
+		if (resource.CompareTag("WoodResource"))
+		{
+			agent.SetDestination(villagerCamp.GetWoodStore().transform.position);
+		}
+		else if (resource.CompareTag("StoneResource"))
+		{
+			agent.SetDestination(villagerCamp.GetStoneStore().transform.position);
+		}
+		else if (resource.CompareTag("FoodResource"))
+		{
+			agent.SetDestination(villagerCamp.GetFoodStore().transform.position);
+		}
+		else
+		{
 			agent.SetDestination(villagerCamp.GetHome().transform.position);
 		}
+
 	}
 
 	private void HoldResource(GameObject resource)
@@ -96,6 +121,10 @@ public class WanderingAI : MonoBehaviour
 
 	private bool IsCloseToResource()
 	{
+		GameObject closest = FindClosestResource();
+		if (closest.GetComponent<Resource>().IsAqurired)
+			return false; // Dont move to resouce if someone has it
+
 		if (Vector3.Distance(FindClosestResource().transform.position, transform.position) < 4)
 			return true;
 
