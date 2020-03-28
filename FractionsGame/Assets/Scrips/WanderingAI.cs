@@ -17,6 +17,7 @@ public class WanderingAI : MonoBehaviour
 	private Transform holdingArea;
 	private GameObject holdingResource;
 	public Vector3 home;
+	private Animator animator;
 
 
 	public void SetHome(Vector3 homePosition) {
@@ -31,6 +32,7 @@ public class WanderingAI : MonoBehaviour
 		walkingHome = false;
 		holdingArea = gameObject.transform.Find("HoldingArea");
 		resources = GameObject.FindGameObjectsWithTag("Resource");
+		animator = GetComponent<Animator>();
 	}
 
 	// Update is called once per frame
@@ -69,6 +71,7 @@ public class WanderingAI : MonoBehaviour
 			walkingHome = false;
 			Destroy(holdingResource);
 			holdingResource = null;
+			animator.SetBool("IsCarrying", false);
 		}
 
 	}
@@ -86,6 +89,7 @@ public class WanderingAI : MonoBehaviour
 
 	private void HoldResource(GameObject resource)
 	{
+		animator.SetBool("IsCarrying", true);
 		holdingResource = resource;
 		resource.transform.position = holdingArea.position;
 	}
