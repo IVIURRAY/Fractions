@@ -21,31 +21,38 @@ public class VillagerCamp : MonoBehaviour
 	[SerializeField]
 	private int foodCount = 0;
 
-	private void Start()
-	{
-		home = gameObject;
-		foodStore = gameObject;
-		woodStore = gameObject;
-		stoneStore = gameObject;
-	}
-
-	public GameObject GetHome() {
+	private GameObject GetHome() {
 		return home;
 	}
 
-	public GameObject GetFoodStore()
+	private GameObject GetFoodStore()
 	{
 		return foodStore;
 	}
 
-	public GameObject GetStoneStore()
+	private GameObject GetStoneStore()
 	{
 		return stoneStore;
 	}
 
-	public GameObject GetWoodStore()
+	private GameObject GetWoodStore()
 	{
 		return woodStore;
+	}
+
+	public GameObject GetResourcesHome(GameObject resource)
+	{
+		GameObject store = null;
+		if (resource.CompareTag("WoodResource"))
+			store = GetWoodStore();
+		else if (resource.CompareTag("StoneResource"))
+			store = GetStoneStore();
+		else if (resource.CompareTag("FoodResource"))
+			store = GetFoodStore();
+		else
+			GetHome();
+
+		return store;
 	}
 
 	private void AddStone() => stoneCount += 1;

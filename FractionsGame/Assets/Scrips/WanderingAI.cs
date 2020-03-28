@@ -80,7 +80,7 @@ public class WanderingAI : MonoBehaviour
 
 	private void WalkHome()
 	{
-		float distanceToHome = Vector3.Distance(transform.position, villagerCamp.GetHome().transform.position);
+		float distanceToHome = Vector3.Distance(transform.position, villagerCamp.GetResourcesHome(holdingResource).transform.position);
 		if (distanceToHome < 1)
 		{
 			villagerCamp.DepositResouce(holdingResource);
@@ -104,32 +104,15 @@ public class WanderingAI : MonoBehaviour
 
 	private void TakeResourceToCamp(GameObject resource)
 	{
-		Resource res = resource.GetComponent<Resource>();
-		res.IsAqurired = true;
-
-		HoldResource(resource);
 		walkingHome = true;
-		if (resource.CompareTag("WoodResource"))
-		{
-			agent.SetDestination(villagerCamp.GetWoodStore().transform.position);
-		}
-		else if (resource.CompareTag("StoneResource"))
-		{
-			agent.SetDestination(villagerCamp.GetStoneStore().transform.position);
-		}
-		else if (resource.CompareTag("FoodResource"))
-		{
-			agent.SetDestination(villagerCamp.GetFoodStore().transform.position);
-		}
-		else
-		{
-			agent.SetDestination(villagerCamp.GetHome().transform.position);
-		}
-
+		HoldResource(resource);
+		agent.SetDestination(villagerCamp.GetResourcesHome(holdingResource).transform.position);
 	}
 
 	private void HoldResource(GameObject resource)
 	{
+		Resource res = resource.GetComponent<Resource>();
+		res.IsAqurired = true;
 		animator.SetBool("IsCarrying", true);
 		holdingResource = resource;
 		resource.transform.position = holdingArea.position;
