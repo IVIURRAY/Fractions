@@ -83,9 +83,9 @@ public class WanderingAI : MonoBehaviour
 		float distanceToHome = Vector3.Distance(transform.position, villagerCamp.GetHome().transform.position);
 		if (distanceToHome < 1)
 		{
-			walkingHome = false;
+			villagerCamp.DepositResouce(holdingResource);
 			resources.Remove(holdingResource);
-			Destroy(holdingResource);
+			walkingHome = false;
 			holdingResource = null;
 			animator.SetBool("IsCarrying", false);
 		}
