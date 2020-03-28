@@ -98,8 +98,15 @@ public class WanderingAI : MonoBehaviour
 		agent.SetDestination(resource.transform.position);
 		if (distance < 1)
 		{
+			PlayPickupSound();
 			TakeResourceToCamp(resource);
 		}
+	}
+
+	private static void PlayPickupSound()
+	{
+		List<string> sounds = new List<string>(new string[] { "Ohhh", "Whoopie", "Yeahh" }); ;
+		FindObjectOfType<AudioManager>().Play(sounds[UnityEngine.Random.Range(0, sounds.Count)]);
 	}
 
 	private void TakeResourceToCamp(GameObject resource)
