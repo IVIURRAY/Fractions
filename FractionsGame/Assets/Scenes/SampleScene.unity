@@ -195,7 +195,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1756473548}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &410504278
 GameObject:
@@ -225,7 +225,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 509997346}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &509997344
 GameObject:
@@ -237,6 +237,7 @@ GameObject:
   m_Component:
   - component: {fileID: 509997346}
   - component: {fileID: 509997345}
+  - component: {fileID: 509997347}
   m_Layer: 0
   m_Name: VillageASpawn
   m_TagString: Untagged
@@ -270,12 +271,28 @@ Transform:
   m_LocalPosition: {x: -17.93, y: 1, z: -18.44}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 1582584157}
   - {fileID: 410504279}
+  - {fileID: 1582584157}
   - {fileID: 1305538092}
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &509997347
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 509997344}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 106868a7e82c78b4084055ef7dda51e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  home: {fileID: 509997344}
+  foodStore: {fileID: 1305538091}
+  woodStore: {fileID: 1582584156}
+  stoneStore: {fileID: 410504278}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -694,7 +711,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1756473548}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1572753325
 GameObject:
@@ -754,7 +771,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 509997346}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1756473546
 GameObject:
@@ -766,6 +783,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1756473548}
   - component: {fileID: 1756473547}
+  - component: {fileID: 1756473549}
   m_Layer: 0
   m_Name: VillageBSpawn
   m_TagString: Untagged
@@ -799,9 +817,25 @@ Transform:
   m_LocalPosition: {x: 15.900002, y: 1, z: 15.199999}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 1389343636}
   - {fileID: 312315691}
+  - {fileID: 1389343636}
   - {fileID: 1572753326}
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1756473549
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1756473546}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 106868a7e82c78b4084055ef7dda51e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  home: {fileID: 1756473546}
+  foodStore: {fileID: 1572753325}
+  woodStore: {fileID: 1389343635}
+  stoneStore: {fileID: 312315690}

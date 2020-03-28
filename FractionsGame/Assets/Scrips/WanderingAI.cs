@@ -16,12 +16,12 @@ public class WanderingAI : MonoBehaviour
 	private bool walkingHome;
 	private Transform holdingArea;
 	private GameObject holdingResource;
-	public Vector3 home;
+	public VillagerCamp villagerCamp;
 	private Animator animator;
 
 
-	public void SetHome(Vector3 homePosition) {
-		home = homePosition;
+	public void SetCamp(VillagerCamp camp) {
+		villagerCamp = camp;
 	}
 
 	// Use this for initialization
@@ -65,7 +65,7 @@ public class WanderingAI : MonoBehaviour
 
 	private void WalkHome()
 	{
-		float distanceToHome = Vector3.Distance(transform.position, home);
+		float distanceToHome = Vector3.Distance(transform.position, villagerCamp.GetHome().transform.position);
 		if (distanceToHome < 1)
 		{
 			walkingHome = false;
@@ -83,7 +83,7 @@ public class WanderingAI : MonoBehaviour
 		if (distance < 1) {
 			HoldResource(resource);
 			walkingHome = true;
-			agent.SetDestination(home);
+			agent.SetDestination(villagerCamp.GetHome().transform.position);
 		}
 	}
 
