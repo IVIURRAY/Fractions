@@ -5,6 +5,12 @@ TagManager:
   serializedVersion: 2
   tags:
   - Resource
+  - WoodResource
+  - StoneResource
+  - FoodResource
+  - FoodStore
+  - WoodStore
+  - StoneStore
   layers:
   - Default
   - TransparentFX
