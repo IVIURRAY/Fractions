@@ -133,7 +133,7 @@ GameObject:
   - component: {fileID: 210620227}
   m_Layer: 0
   m_Name: WoodSpawn
-  m_TagString: WoodResource
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -150,7 +150,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41b3389782a627c4ebd8ab277589c69c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefab: {fileID: 5142421063199204443, guid: 661c0d746d1e0fc4c8b848bff15a8fc8, type: 3}
+  prefab: {fileID: 254742509467272712, guid: 9f20d070ada978547b4c9031714dc8f8, type: 3}
   numberOfObjects: 20
   radius: 5
 --- !u!4 &210620228
@@ -397,7 +397,7 @@ GameObject:
   - component: {fileID: 728437696}
   m_Layer: 0
   m_Name: StoneSpawn
-  m_TagString: StoneResource
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -414,7 +414,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41b3389782a627c4ebd8ab277589c69c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefab: {fileID: 5142421063199204443, guid: 661c0d746d1e0fc4c8b848bff15a8fc8, type: 3}
+  prefab: {fileID: 6696626998410795633, guid: c3bcb801dba8c4b4194679dde79099d2, type: 3}
   numberOfObjects: 20
   radius: 5
 --- !u!4 &728437697
@@ -526,7 +526,7 @@ GameObject:
   - component: {fileID: 1032155979}
   m_Layer: 0
   m_Name: FoodSpawn
-  m_TagString: FoodResource
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -543,7 +543,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41b3389782a627c4ebd8ab277589c69c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefab: {fileID: 5142421063199204443, guid: 661c0d746d1e0fc4c8b848bff15a8fc8, type: 3}
+  prefab: {fileID: 1986703795174595052, guid: 30eda0bf23f87474c9abfa7f250f8abc, type: 3}
   numberOfObjects: 20
   radius: 5
 --- !u!4 &1032155980

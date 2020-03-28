@@ -11,7 +11,7 @@ public class WanderingAI : MonoBehaviour
 
 	private Transform target;
 	private NavMeshAgent agent;
-	private GameObject[] resources;
+	private List<GameObject> resources = new List<GameObject>();
 	private float timer;
 	private bool walkingHome;
 	private Transform holdingArea;
@@ -31,12 +31,23 @@ public class WanderingAI : MonoBehaviour
 		timer = wanderTimer;
 		walkingHome = false;
 		holdingArea = gameObject.transform.Find("HoldingArea");
-		resources = GameObject.FindGameObjectsWithTag("Resource");
+		resources = FindAllResources();
 		animator = GetComponent<Animator>();
 	}
 
 	// Update is called once per frame
 	void Update()
+	{
+		if (walkingHome)
+			WalkHome();
+
+		if (holdingResource)
+			HoldResource(holdingResource);
+
+		ForageForResources();
+	}
+
+	private void ForageForResources()
 	{
 		timer += Time.deltaTime;
 
@@ -51,15 +62,19 @@ public class WanderingAI : MonoBehaviour
 				MoveToRandomLocation();
 			}
 		}
+	}
 
-		if (walkingHome)
-		{
-			WalkHome();
-		}
+	private List<GameObject> FindAllResources() 
+	{
+		GameObject[] wood = GameObject.FindGameObjectsWithTag("WoodResource");
+		GameObject[] stone = GameObject.FindGameObjectsWithTag("StoneResource");
+		GameObject[] food = GameObject.FindGameObjectsWithTag("FoodResource");
 
+		resources.AddRange(wood);
+		resources.AddRange(stone);
+		resources.AddRange(food);
 
-		if (holdingResource)
-			HoldResource(holdingResource);
+		return resources;
 
 	}
 
@@ -69,6 +84,7 @@ public class WanderingAI : MonoBehaviour
 		if (distanceToHome < 1)
 		{
 			walkingHome = false;
+			resources.Remove(holdingResource);
 			Destroy(holdingResource);
 			holdingResource = null;
 			animator.SetBool("IsCarrying", false);
@@ -137,14 +153,14 @@ public class WanderingAI : MonoBehaviour
 
 		foreach (GameObject resource in resources)
 		{
-			if (resource == null)
-				continue;
-
-			float distanceToResource = Vector3.Distance(resource.gameObject.transform.position, transform.position);
-			if (distanceToResource < distance)
+			if (resource != null)
 			{
-				distance = distanceToResource;
-				closest = resource;
+				float distanceToResource = Vector3.Distance(resource.gameObject.transform.position, transform.position);
+				if (distanceToResource < distance)
+				{
+					distance = distanceToResource;
+					closest = resource;
+				}
 			}
 		}
 
