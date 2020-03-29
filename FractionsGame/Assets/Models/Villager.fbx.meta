@@ -15,7 +15,27 @@ ModelImporter:
   - first:
       74: 1455341560387705808
     second: metarig|Walking_Normal
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Brass
+    second: {fileID: 2100000, guid: 11bc81e37a9b0d94da826b4c10a196c7, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Brass.001
+    second: {fileID: 2100000, guid: 4b61015fdbc2b744cb9bd2c5dd897473, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material.001
+    second: {fileID: 2100000, guid: 52905d0064c1e044ab85a559aab221bc, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material.002
+    second: {fileID: 2100000, guid: f5fcecbd44368284da62ad65475650ca, type: 2}
   materials:
     materialImportMode: 1
     materialName: 0
