@@ -641,6 +641,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 106868a7e82c78b4084055ef7dda51e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  superVillager: {fileID: 6041534854557098448, guid: c16c0b87719844c4d960f37cd994c1a7,
+    type: 3}
   home: {fileID: 509997344}
   foodStore: {fileID: 1305538091}
   woodStore: {fileID: 1582584156}
@@ -1752,6 +1754,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 106868a7e82c78b4084055ef7dda51e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  superVillager: {fileID: 6041534854557098448, guid: c16c0b87719844c4d960f37cd994c1a7,
+    type: 3}
   home: {fileID: 1756473546}
   foodStore: {fileID: 1572753325}
   woodStore: {fileID: 1389343635}
