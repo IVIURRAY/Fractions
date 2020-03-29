@@ -9,13 +9,16 @@ public class WanderingAI : MonoBehaviour
 	public float wanderRadius;
 	public float wanderTimer;
 
-	private Transform target;
 	private NavMeshAgent agent;
 	private List<GameObject> resources = new List<GameObject>();
 	private float timer;
-	private bool walkingHome;
+    [SerializeField]
+    private bool walkingToLastKnownResource;
+    [SerializeField]
+    private bool walkingHome;
 	private Transform holdingArea;
 	private GameObject holdingResource;
+    private Vector3 lastKnownResourcePosition;
 	public VillagerCamp villagerCamp;
 	private Animator animator;
 
@@ -24,13 +27,14 @@ public class WanderingAI : MonoBehaviour
 		villagerCamp = camp;
 	}
 
-	// Use this for initialization
-	void Start()
+    // Use this for initialization
+    void Start()
 	{
 		agent = GetComponent<NavMeshAgent>();
 		timer = wanderTimer;
 		walkingHome = false;
-		holdingArea = gameObject.transform.Find("HoldingArea");
+        walkingToLastKnownResource = false;
+        holdingArea = gameObject.transform.Find("HoldingArea");
 		resources = FindAllResources();
 		animator = GetComponent<Animator>();
 	}
@@ -41,17 +45,26 @@ public class WanderingAI : MonoBehaviour
 		if (walkingHome)
 			WalkHome();
 
-		if (holdingResource)
+        if (holdingResource)
 			HoldResource(holdingResource);
 
-		ForageForResources();
+        if (walkingToLastKnownResource)
+            WalkToLastKnownResourceLocation();
+        
+        ForageForResources();
 	}
 
-	private void ForageForResources()
+    private void WalkToLastKnownResourceLocation()
+    {
+        agent.SetDestination(lastKnownResourcePosition);
+        walkingToLastKnownResource = Vector3.Distance(transform.position, lastKnownResourcePosition) >= 1;
+    }
+
+    private void ForageForResources()
 	{
 		timer += Time.deltaTime;
 
-		if (timer >= wanderTimer && !walkingHome)
+		if (timer >= wanderTimer && !walkingHome && !walkingToLastKnownResource)
 		{
 			if (IsCloseToResource())
 			{
@@ -83,11 +96,16 @@ public class WanderingAI : MonoBehaviour
 		float distanceToHome = Vector3.Distance(transform.position, villagerCamp.GetResourcesHome(holdingResource).transform.position);
 		if (distanceToHome < 1)
 		{
-			villagerCamp.DepositResouce(holdingResource);
-			resources.Remove(holdingResource);
-			walkingHome = false;
-			holdingResource = null;
-			animator.SetBool("IsCarrying", false);
+            // Deposit resouce in camp
+            villagerCamp.DepositResouce(holdingResource);
+            resources.Remove(holdingResource);
+
+            // Tidy up state
+            walkingHome = false;
+            holdingResource = null;
+            walkingToLastKnownResource = true;
+
+            animator.SetBool("IsCarrying", false);
 		}
 
 	}
@@ -98,27 +116,28 @@ public class WanderingAI : MonoBehaviour
 		agent.SetDestination(resource.transform.position);
 		if (distance < 1)
 		{
-			PlayPickupSound();
+            PlayPickupSound();
 			TakeResourceToCamp(resource);
 		}
 	}
 
 	private static void PlayPickupSound()
 	{
-		List<string> sounds = new List<string>(new string[] { "Ohhh", "Whoopie", "Yeahh" }); ;
-		FindObjectOfType<AudioManager>().Play(sounds[UnityEngine.Random.Range(0, sounds.Count)]);
+		List<string> sounds = new List<string>(new string[] { "Ohhh", "Whoopie", "Yeahh" });
+        FindObjectOfType<AudioManager>().Play(sounds[UnityEngine.Random.Range(0, sounds.Count)]);
 	}
 
 	private void TakeResourceToCamp(GameObject resource)
 	{
-		walkingHome = true;
+        lastKnownResourcePosition = resource.transform.position;
+        walkingHome = true;
 		HoldResource(resource);
 		agent.SetDestination(villagerCamp.GetResourcesHome(holdingResource).transform.position);
 	}
 
 	private void HoldResource(GameObject resource)
 	{
-		Resource res = resource.GetComponent<Resource>();
+        Resource res = resource.GetComponent<Resource>();
 		res.IsAqurired = true;
 		animator.SetBool("IsCarrying", true);
 		holdingResource = resource;
@@ -128,7 +147,7 @@ public class WanderingAI : MonoBehaviour
 	private bool IsCloseToResource()
 	{
 		GameObject closest = FindClosestResource();
-		if (closest.GetComponent<Resource>().IsAqurired)
+        if (!closest || closest.GetComponent<Resource>().IsAqurired)
 			return false; // Dont move to resouce if someone has it
 
 		if (Vector3.Distance(FindClosestResource().transform.position, transform.position) < 4)
