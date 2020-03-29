@@ -5,26 +5,31 @@ using UnityEngine;
 
 public class VillagerCamp : MonoBehaviour
 {
-	[SerializeField]
-	GameObject home;
-	[SerializeField]
-	GameObject foodStore;
-	[SerializeField]
-	GameObject woodStore;
-	[SerializeField]
-	GameObject stoneStore;
+    [SerializeField]
+    GameObject superVillager;
 
-	[SerializeField]
-	private int stoneCount = 0;
-	[SerializeField]
-	private int woodCount = 0;
-	[SerializeField]
-	private int foodCount = 0;
+    [SerializeField]
+    GameObject home;
+    [SerializeField]
+    GameObject foodStore;
+    [SerializeField]
+    GameObject woodStore;
+    [SerializeField]
+    GameObject stoneStore;
+
+    [SerializeField]
+    private int stoneCount = 0;
+    [SerializeField]
+    private int woodCount = 0;
+    [SerializeField]
+    private int foodCount = 0;
     private string newsUpdates = "Welcome to Camp!";
 
     private Spawner spawner;
     private float eatFoodTimer;
     private float notEnoughtFoodTime;
+    private bool spawnedSuperVillager;
+
 
     private void Start()
     {
@@ -34,6 +39,20 @@ public class VillagerCamp : MonoBehaviour
     private void Update()
     {
         VillagersEatFood();
+        EnoughStoneForSuperVillager();
+    }
+
+    private void EnoughStoneForSuperVillager()
+    {
+        if (GetStoneCount() % 2 == 0 && !spawnedSuperVillager)
+        {
+            AddNewsUpdate("Super Villager was born!");
+            WanderingAI wanderingAi = superVillager.GetComponent<WanderingAI>();
+            wanderingAi.SetCamp(this);
+
+            spawner.SpawnPrefab(superVillager);
+            spawnedSuperVillager = true;
+        }
     }
 
     private void VillagersEatFood()
@@ -60,46 +79,50 @@ public class VillagerCamp : MonoBehaviour
                 AddNewsUpdate("Villager eat food.");
             }
         }
-        
 
-        
+
+
     }
 
     private GameObject GetHome() {
-		return home;
-	}
+        return home;
+    }
 
-	private GameObject GetFoodStore()
-	{
-		return foodStore;
-	}
+    private GameObject GetFoodStore()
+    {
+        return foodStore;
+    }
 
-	private GameObject GetStoneStore()
-	{
-		return stoneStore;
-	}
+    private GameObject GetStoneStore()
+    {
+        return stoneStore;
+    }
 
-	private GameObject GetWoodStore()
-	{
-		return woodStore;
-	}
+    private GameObject GetWoodStore()
+    {
+        return woodStore;
+    }
 
-	public GameObject GetResourcesHome(GameObject resource)
-	{
-		GameObject store = null;
-		if (resource.CompareTag("WoodResource"))
-			store = GetWoodStore();
-		else if (resource.CompareTag("StoneResource"))
-			store = GetStoneStore();
-		else if (resource.CompareTag("FoodResource"))
-			store = GetFoodStore();
-		else
-			GetHome();
+    public GameObject GetResourcesHome(GameObject resource)
+    {
+        GameObject store = null;
+        if (resource.CompareTag("WoodResource"))
+            store = GetWoodStore();
+        else if (resource.CompareTag("StoneResource"))
+            store = GetStoneStore();
+        else if (resource.CompareTag("FoodResource"))
+            store = GetFoodStore();
+        else
+            GetHome();
 
-		return store;
-	}
+        return store;
+    }
 
-	private void AddStone() => stoneCount += 1;
+    private void AddStone() {
+        stoneCount += 1;
+        spawnedSuperVillager = false;
+    }
+
 	private void AddWood() => woodCount += 1;
 	private void AddFood() => foodCount += 1;
 

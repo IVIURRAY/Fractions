@@ -39,4 +39,9 @@ public class Spawner : MonoBehaviour
             spawns.Remove(found);
             Destroy(found);
     }
+
+    public void SpawnPrefab(GameObject go)
+    {
+        spawns.Add(Instantiate(go, transform.position, transform.rotation));
+    }
 }
