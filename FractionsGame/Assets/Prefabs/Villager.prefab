@@ -552,6 +552,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   wanderRadius: 10
   wanderTimer: 1
+  wanderSpeed: 3.5
   walkingToLastKnownResource: 0
   walkingHome: 0
   villagerCamp: {fileID: 0}

@@ -8,6 +8,7 @@ public class WanderingAI : MonoBehaviour
 
 	public float wanderRadius;
 	public float wanderTimer;
+    public float wanderSpeed;
 
 	private NavMeshAgent agent;
 	private List<GameObject> resources = new List<GameObject>();
@@ -30,8 +31,9 @@ public class WanderingAI : MonoBehaviour
     // Use this for initialization
     void Start()
 	{
-		agent = GetComponent<NavMeshAgent>();
-		timer = wanderTimer;
+        agent = GetComponent<NavMeshAgent>();
+        agent.speed = wanderSpeed;
+        timer = wanderTimer;
 		walkingHome = false;
         walkingToLastKnownResource = false;
         holdingArea = gameObject.transform.Find("HoldingArea");
