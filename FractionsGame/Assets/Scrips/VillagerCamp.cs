@@ -20,8 +20,52 @@ public class VillagerCamp : MonoBehaviour
 	private int woodCount = 0;
 	[SerializeField]
 	private int foodCount = 0;
+    private string newsUpdates = "Welcome to Camp!";
 
-	private GameObject GetHome() {
+    private Spawner spawner;
+    private float eatFoodTimer;
+    private float notEnoughtFoodTime;
+
+    private void Start()
+    {
+        spawner = GetComponent<Spawner>();
+    }
+
+    private void Update()
+    {
+        VillagersEatFood();
+    }
+
+    private void VillagersEatFood()
+    {
+        // If we don't have enough food, villagrs die.
+        if (GetFoodCount() == 0)
+        {
+            notEnoughtFoodTime += Time.deltaTime;
+            if (notEnoughtFoodTime > 5)
+            {
+                spawner.KillSpawnWithTag("Villager");
+                notEnoughtFoodTime = 0;
+                AddNewsUpdate("Not enough food. Villager died.");
+            }
+        }
+        else
+        {
+            // Eat food periodically
+            eatFoodTimer += Time.deltaTime;
+            if (eatFoodTimer > 10)
+            {
+                RemoveFood();
+                eatFoodTimer = 0;
+                AddNewsUpdate("Villager eat food.");
+            }
+        }
+        
+
+        
+    }
+
+    private GameObject GetHome() {
 		return home;
 	}
 
@@ -59,9 +103,19 @@ public class VillagerCamp : MonoBehaviour
 	private void AddWood() => woodCount += 1;
 	private void AddFood() => foodCount += 1;
 
-	public int GetStoneCount() => stoneCount;
+    private void RemoveStone() => stoneCount = Math.Max(stoneCount -= 1, 0);
+    private void RemoveWood() => woodCount = Math.Max(woodCount -= 1, 0);
+    private void RemoveFood() => foodCount = Math.Max(foodCount -= 1, 0);
+
+    public int GetStoneCount() => stoneCount;
 	public int GetWoodCount() => woodCount;
 	public int GetFoodCount() => foodCount;
+    public string GetNewsUpdates() => newsUpdates;
+
+    private void AddNewsUpdate(string update)
+    {
+        newsUpdates = update + "\n" + newsUpdates;
+    }
 
 	internal void DepositResouce(GameObject resource)
 	{

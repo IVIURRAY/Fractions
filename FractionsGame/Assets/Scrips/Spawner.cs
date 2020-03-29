@@ -8,6 +8,9 @@ public class Spawner : MonoBehaviour
 	public GameObject prefab;
 	public int numberOfObjects = 20;
 	public float radius = 5f;
+
+    private List<GameObject> spawns = new List<GameObject>();
+
 	void Start()
 	{
 		for (int i = 0; i < numberOfObjects; i++)
@@ -25,7 +28,15 @@ public class Spawner : MonoBehaviour
 			if (wanderingAi)
 				wanderingAi.SetCamp(villagerCamp);
 
-			Instantiate(prefab, pos, rot);
+            spawns.Add(Instantiate(prefab, pos, rot));
 		}
 	}
+
+    public void KillSpawnWithTag(string tag)
+    {
+        GameObject found = spawns.Find(go => go.CompareTag(tag));
+        if (found)
+            spawns.Remove(found);
+            Destroy(found);
+    }
 }

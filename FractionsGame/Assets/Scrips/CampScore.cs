@@ -7,6 +7,7 @@ public class CampScore : MonoBehaviour
 	public Text woodScore;
 	public Text foodScore;
 	public Text stoneScore;
+    public Text newsUpdates;
 
     // Update is called once per frame
     void Update()
@@ -14,5 +15,6 @@ public class CampScore : MonoBehaviour
 		woodScore.text = camp.GetWoodCount().ToString();
 		stoneScore.text = camp.GetStoneCount().ToString();
 		foodScore.text = camp.GetFoodCount().ToString();
+        newsUpdates.text = camp.GetNewsUpdates();
     }
 }

@@ -11,6 +11,7 @@ TagManager:
   - FoodStore
   - WoodStore
   - StoneStore
+  - Villager
   layers:
   - Default
   - TransparentFX
